@@ -6,6 +6,7 @@ auth = HTTPBasicAuth(username, password)
 
 maxResult = 100
 startAt = 0
+result = 0
 
 styleId = "customfield_10440"
 server = "qstrike.atlassian.net"
