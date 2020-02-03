@@ -1,8 +1,8 @@
 from requests.auth import HTTPBasicAuth
 
 username = "jowin@qstrike.com"
-password = "nH484g7DFwDAMUoRunufFC3D"
-auth = HTTPBasicAuth(username, password)
+token = "nH484g7DFwDAMUoRunufFC3D"
+auth = HTTPBasicAuth(username, token)
 
 maxResult = 100
 startAt = 0

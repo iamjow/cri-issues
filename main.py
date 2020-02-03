@@ -1,7 +1,6 @@
-from openpyxl import Workbook
-
 if __name__ == '__main__':
-    import main_index
+    from openpyxl import Workbook
+    from modules import main_index
     import config
     import json
     import requests

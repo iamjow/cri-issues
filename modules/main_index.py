@@ -1,6 +1,6 @@
 from pprint import pprint
 from pydash import py_
-import sheet_style as style
+from modules import sheet_style as style
 
 
 class __fetchDataFromJira__(object):
@@ -19,9 +19,9 @@ class __fetchDataFromJira__(object):
         self.data_issues = data_issues
         self.worksheet = worksheet
         self.list1 = item_list1
-        self.list2 = item_list2
         self.labels = labels
         self.style_id = style_id
+        self.list2 = item_list2
         self.status = status
         self.issue_link = url_issue_link
         self.workbook = workbook
