@@ -1,18 +1,31 @@
 if __name__ == '__main__':
     from openpyxl import Workbook
-    from modules import main_index
+    from cri_modules import cri_main_index
+    from cco_modules import cco_main_index
     import config
     import json
     import requests
 
     auth = config.auth
-    url = config.url
-    response = requests.request("GET", url, auth=auth)
-    data_issues = json.loads(response.text)
+
+    # CRI WORKBOOK/WORKSHEET
+    cri_workbook = Workbook()
+    cri_work_sheet1 = cri_workbook.active
+    cri_work_sheet2 = cri_workbook.create_sheet('Sheet1')
+
+    # CCO WORKBOOK/WORKSHEET
+    cco_workbook = Workbook()
+    cco_work_sheet1 = cco_workbook.active
+    cco_work_sheet2 = cco_workbook.create_sheet('Sheet1')
+
+    # CRI DATA RESPONSE
+    cri_url = config.cri_url
+    response = requests.request("GET", cri_url, auth=auth)
+    cri_data_issues = json.loads(response.text)
 
     url_issue_link = config.url_issue_link
 
-    worksheet = config.ws
+    cri_worksheet = config.cri_ws
 
     labels = []
     item_list1 = []
@@ -23,23 +36,37 @@ if __name__ == '__main__':
     id_style = config.styleId
     style_id = id_style
 
-    workbook = Workbook()
-    work_sheet1 = workbook.active
-    work_sheet2 = workbook.create_sheet('Sheet1')
+    # CCO DATA RESPONSE
+    cco_url = config.cco_url
+    response = requests.request("GET", cco_url, auth=auth)
+    cco_data_issues = json.loads(response.text)
 
-    def getMainIndexData():
-        main_data = main_index.__fetchDataFromJira__(data_issues,
-                                                     worksheet,
-                                                     item_list1,
-                                                     item_list2,
-                                                     labels,
-                                                     style_id,
-                                                     status,
-                                                     url_issue_link,
-                                                     workbook,
-                                                     work_sheet1,
-                                                     work_sheet2)
-        main_data.displayData()
-        main_data.displayStyleSheet()
+    cco_worksheet = config.cco_ws
 
-getMainIndexData()
+    def execCRIMainIndexData():
+        cri_main_data = cri_main_index.__fetchCRIIssues__(cri_data_issues,
+                                                          cri_worksheet,
+                                                          item_list1,
+                                                          item_list2,
+                                                          labels,
+                                                          style_id,
+                                                          status,
+                                                          url_issue_link,
+                                                          cri_workbook,
+                                                          cri_work_sheet1,
+                                                          cri_work_sheet2)
+        cri_main_data.displayData()
+        cri_main_data.displayStyleSheet()
+
+
+    def execCCOMainIndexData():
+        cco_main_data = cco_main_index.__fetchCCOIssues__(cco_data_issues,
+                                                          cco_workbook,
+                                                          cco_worksheet,
+                                                          cco_work_sheet1,
+                                                          cco_work_sheet2)
+        cco_main_data.displayData()
+        cco_main_data.displayStyleSheet()
+
+execCRIMainIndexData()
+execCCOMainIndexData()
